@@ -24,6 +24,19 @@ export function useAuth() {
         return { success: false, error: error.message }
       }
       
+      // Also add user to our custom users table with "superadmin" role
+      if (data.user) {
+        const { error: userError } = await supabase.from('users').insert({
+          id: data.user.id,
+          email: data.user.email,
+          role: 'superadmin' // All new registrations get super admin privileges
+        })
+        
+        if (userError) {
+          console.error('Error adding user to users table:', userError)
+        }
+      }
+      
       return { success: true, data }
     } catch (err) {
       const errorMessage = 'An unexpected error occurred'

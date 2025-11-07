@@ -3,6 +3,7 @@ create table if not exists public.roles (
   id uuid default gen_random_uuid() primary key,
   name text not null unique,
   description text,
+  permissions jsonb default '{}',
   created_at timestamp with time zone default now()
 );
 
@@ -43,9 +44,10 @@ create policy "Admins can update users" on public.users
 create policy "Admins can delete users" on public.users
   for delete using (true);
 
--- Insert default roles
-insert into public.roles (name, description) values 
-  ('admin', 'Administrator with full access'),
-  ('user', 'Regular user with limited access'),
-  ('moderator', 'Moderator with content management access')
+-- Insert default roles with permissions
+insert into public.roles (name, description, permissions) values 
+  ('superadmin', 'Super administrator with all permissions', '{"user_management": true, "role_management": true}'),
+  ('admin', 'Administrator with full access', '{"user_management": true, "role_management": true}'),
+  ('moderator', 'Moderator with content management access', '{"user_management": false, "role_management": false}'),
+  ('user', 'Regular user with limited access', '{"user_management": false, "role_management": false}')
 on conflict (name) do nothing;

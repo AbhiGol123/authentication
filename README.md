@@ -1,6 +1,6 @@
-# Next.js Authentication with Supabase (Minimal Implementation)
+# Next.js Authentication with Supabase (Role-Based Access Control Implementation)
 
-This is a simplified Next.js project implementing only login and registration functionality with Supabase and Tailwind CSS.
+This is a Next.js project implementing a complete role-based access control system with Supabase and Tailwind CSS.
 
 ## Features
 
@@ -8,6 +8,10 @@ This is a simplified Next.js project implementing only login and registration fu
 - User Login with Email/Password
 - Session Management
 - Protected Dashboard Route
+- Role-Based Access Control (RBAC)
+- User Management (Create, Read, Update, Delete)
+- Role Management (Create, Read, Update, Delete)
+- Permission System (User Management, Role Management)
 
 ## Getting Started
 
@@ -28,21 +32,36 @@ This is a simplified Next.js project implementing only login and registration fu
    NEXT_PUBLIC_SUPABASE_ANON_KEY=your-supabase-anon-key
    ```
 
-5. Run the development server:
+5. Run the database migrations:
+   - Execute the SQL scripts in the `/supabase/migrations` directory in order
+   - Or use the Supabase CLI to apply migrations
+
+6. Run the development server:
    ```bash
    npm run dev
    ```
 
-6. Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+7. Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
+## Role-Based Access Control
+
+The system includes the following roles by default:
+- **Super Admin**: Full access to all features
+- **Admin**: Full access to user and role management
+- **Moderator**: Limited access (no management permissions)
+- **User**: Basic access (no management permissions)
+
+Each role has specific permissions that control access to different parts of the application.
 
 ## Project Structure
 
 - `/src/app/login` - Login page
 - `/src/app/register` - Registration page
-- `/src/app/dashboard` - Protected dashboard (requires authentication)
+- `/src/app/dashboard` - Protected dashboard with role-based access control
 - `/src/hooks/useAuth.ts` - Authentication hook with login/register functions
 - `/src/lib/supabaseClient.ts` - Supabase client configuration
 - `/src/middleware.ts` - Route protection middleware
+- `/supabase/migrations` - Database migration scripts
 
 ## Learn More
 
@@ -56,4 +75,4 @@ To learn more about the technologies used in this project:
 
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.# authentication
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
