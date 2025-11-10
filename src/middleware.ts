@@ -34,8 +34,8 @@ export async function middleware(request: NextRequest) {
   
   const { data: { session } } = await supabase.auth.getSession()
 
-  // Protect dashboard route
-  if (request.nextUrl.pathname.startsWith('/dashboard') && !session) {
+  // Protect dashboard and profile routes
+  if ((request.nextUrl.pathname.startsWith('/dashboard') || request.nextUrl.pathname.startsWith('/profile')) && !session) {
     const redirectUrl = request.nextUrl.clone()
     redirectUrl.pathname = '/login'
     return NextResponse.redirect(redirectUrl)
@@ -52,5 +52,5 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/dashboard/:path*', '/login', '/register'],
+  matcher: ['/dashboard/:path*', '/profile/:path*', '/login', '/register'],
 }
