@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { supabase } from '@/lib/supabaseClient'
+import Header from '@/components/Header'
 
 type UserProfile = {
   id: string
@@ -71,7 +72,7 @@ export default function ProfilePage() {
   return (
     <div className="min-h-screen bg-gray-100">
       {/* Navigation */}
-      <nav className="bg-white shadow-sm">
+      {/* <nav className="bg-white shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-16">
             <div className="flex items-center">
@@ -118,7 +119,8 @@ export default function ProfilePage() {
             </div>
           </div>
         </div>
-      </nav>
+      </nav> */}
+      <Header/>
 
       {/* Main Content */}
       <main className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
