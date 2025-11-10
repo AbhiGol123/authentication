@@ -26,10 +26,15 @@ export function useAuth() {
       
       // Also add user to our custom users table with "superadmin" role
       if (data.user) {
+        // Get the current session user (if any) to set as creator
+        const { data: { session } } = await supabase.auth.getSession();
+        const creatorId = session?.user?.id;
+        
         const { error: userError } = await supabase.from('users').insert({
           id: data.user.id,
           email: data.user.email,
-          role: 'superadmin' // All new registrations get super admin privileges
+          role: 'superadmin', // Assign superadmin role to all new registrations
+          creator_id: creatorId // Set creator ID (null if self-registering)
         })
         
         if (userError) {
